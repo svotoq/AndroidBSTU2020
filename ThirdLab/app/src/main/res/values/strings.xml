@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ThirdLab</string>
+
+    <string name="button_delete">Удалить</string>
+    <string name="button_save">Сохранить</string>
+    
+    <string name="input_add_note">Добавить заметку</string>
+</resources>
