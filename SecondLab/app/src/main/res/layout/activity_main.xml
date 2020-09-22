@@ -22,7 +22,8 @@
         android:layout_toEndOf="@id/age_label"
         android:width="100dp"
         android:autofillHints="18"
-        android:inputType="numberSigned" />
+        android:inputType="numberSigned"
+        />
 
     <TextView
         android:id="@+id/gender_label"
@@ -67,7 +68,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/gender_radios"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@id/weight_label"
         android:width="100dp"
         android:autofillHints="60"
@@ -86,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edit_weight"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="38dp"
         android:layout_toEndOf="@id/height_label"
         android:width="100dp"
         android:autofillHints="60"

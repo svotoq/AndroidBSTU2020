@@ -20,5 +20,8 @@
 
     <string name="calculate">Рассчитать результат</string>
 
-    <string name="result_toast">Вам необходимо потреблять %1$s ККал</string>
+    <string name="result_message">Вам необходимо потреблять %1$s ККал</string>
+    <string name="age_validation_error">Введите возраст в диапазоне от %1$d до %2$d</string>
+    <string name="height_validation_error">Введите рост в диапазоне от %1$d до %2$d</string>
+    <string name="weight_validation_error">Введите вес в диапазоне от %1$d до %2$d</string>
 </resources>

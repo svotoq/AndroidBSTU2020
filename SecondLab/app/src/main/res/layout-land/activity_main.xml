@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/gender_radios"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="45dp"
         android:layout_toEndOf="@id/weight_label"
         android:width="100dp"
         android:autofillHints="60"
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edit_weight"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="38dp"
         android:layout_toEndOf="@id/height_label"
         android:width="100dp"
         android:autofillHints="60"
@@ -118,8 +118,8 @@
                 android:id="@+id/activity_none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/not_active"
-                android:checked="true"/>
+                android:checked="true"
+                android:text="@string/not_active" />
 
             <RadioButton
                 android:id="@+id/activity_regular"
@@ -141,6 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
         android:text="@string/calculate"
         android:onClick="onCalculateClicked"/>
