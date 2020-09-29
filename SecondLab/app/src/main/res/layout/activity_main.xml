@@ -2,8 +2,8 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="30dp"
     tools:context=".MainActivity">
 
@@ -95,8 +95,8 @@
         android:inputType="numberSigned" />
 
     <com.google.android.material.circularreveal.CircularRevealRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/edit_height">
 
         <TextView
@@ -109,18 +109,19 @@
 
         <RadioGroup
             android:id="@+id/activity_radios"
-            android:layout_width="283dp"
+            android:layout_width="wrap_content"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginStart="43dp"
-            android:layout_toEndOf="@id/activity_label"
+            android:layout_toEndOf="@+id/activity_label"
             android:orientation="vertical">
 
             <RadioButton
                 android:id="@+id/activity_none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/not_active"
-                android:checked="true"/>
+                android:checked="true"
+                android:text="@string/not_active" />
 
             <RadioButton
                 android:id="@+id/activity_regular"
