@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="age_min">1</integer>
+    <integer name="age_max">120</integer>
+
+    <integer name="height_min">1</integer>
+    <integer name="height_max">250</integer>
+
+    <integer name="weight_min">1</integer>
+    <integer name="weight_max">400</integer>
+</resources>

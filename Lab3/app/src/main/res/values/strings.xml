@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ThirdLab</string>
+
+    <string name="button_delete">Удалить</string>
+    <string name="button_save">Сохранить</string>
+    
+    <string name="input_add_note">Добавить заметку</string>
+
+    <string name="note_added">Заметка добавлена</string>
+    <string name="empty_note_field">Введите заметку</string>
+    <string name="note_deleted">Заметка удалена</string>
+    <string name="note_is_not_exists">Заметки не существует</string>
+</resources>
