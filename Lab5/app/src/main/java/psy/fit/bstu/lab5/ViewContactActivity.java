@@ -12,7 +12,7 @@ import psy.fit.bstu.lab5.db.DatabaseContactController;
 
 public class ViewContactActivity extends AppCompatActivity {
 
-    DatabaseContactController contactController;
+    private DatabaseContactController contactController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

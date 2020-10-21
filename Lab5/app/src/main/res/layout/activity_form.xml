@@ -69,30 +69,30 @@
         app:layout_constraintTop_toBottomOf="@+id/locationEditText" />
 
     <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onSaveContact"
-        android:text="@string/save"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/contactFormNavBack"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96" />
-
-    <Button
         android:id="@+id/contactFormNavBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onNavBack"
         android:text="@string/back"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/saveButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/contactFormSaveButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96" />
+
+    <Button
+        android:id="@+id/contactFormSaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onSaveContact"
+        android:text="@string/save"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/contactFormNavBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/saveButton"
-        app:layout_constraintTop_toTopOf="@+id/saveButton" />
+        app:layout_constraintStart_toEndOf="@+id/contactFormNavBack"
+        app:layout_constraintTop_toTopOf="@+id/contactFormNavBack" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

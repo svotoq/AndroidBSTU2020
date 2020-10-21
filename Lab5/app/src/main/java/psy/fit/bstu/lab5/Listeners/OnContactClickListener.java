@@ -13,9 +13,8 @@ public class OnContactClickListener implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Context context = view.getContext();
-        Contact contact = (Contact)adapterView.getItemAtPosition(position);
-        Intent intent = new Intent(context, ViewContactActivity.class);
-        intent.putExtra("id", contact.getID());
-        context.startActivity(intent);
+        Contact contact = (Contact) adapterView.getItemAtPosition(position);
+        adapterView.setSelection(position);
     }
+
 }
