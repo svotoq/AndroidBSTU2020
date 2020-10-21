@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String NOTES_FILE_NAME = "notes.txt";
+    public final static String NOTES_FILE_NAME = "notes.json";
     public Map<String, String> notes = new HashMap<>();
     private EditText noteField;
     private String selectedDate;
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             while ((lines = buffReader.readLine()) != null) {
                 strBuffer.append(lines).append("\n");
             }
-
             Type dataType = new TypeToken<Map<String, String>>() {
             }.getType();
             notes = new Gson().fromJson(strBuffer.toString(), dataType);
