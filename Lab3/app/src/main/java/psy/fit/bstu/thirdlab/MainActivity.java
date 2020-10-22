@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Environment;
+import android.telephony.IccOpenLogicalChannelResponse;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public Map<String, String> notes = new HashMap<>();
     private EditText noteField;
     private String selectedDate;
+    private boolean externalMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        readFromJson();
+        if (!externalMode) {
+            readFromJson();
+        } else {
+            readFromExternalJson();
+        }
     }
 
     public void onSave(View view) throws IOException {
@@ -63,7 +70,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         notes.put(selectedDate, note);
-        writeToJson();
+
+        if (externalMode) {
+            writeToExternalJson();
+        } else {
+            writeToJson();
+        }
         Toast.makeText(getApplicationContext(), R.string.note_added, Toast.LENGTH_SHORT).show();
     }
 
@@ -76,8 +88,21 @@ public class MainActivity extends AppCompatActivity {
 
         notes.remove(selectedDate);
         noteField.setText("");
-        writeToJson();
+        if (externalMode) {
+            writeToExternalJson();
+        } else {
+            writeToJson();
+        }
         Toast.makeText(getApplicationContext(), R.string.note_deleted, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onExternalMode(View view) {
+        if (externalMode) {
+            readFromJson();
+        } else {
+            readFromExternalJson();
+        }
+        externalMode = !externalMode;
     }
 
     public void writeToJson() throws IOException {
@@ -87,9 +112,39 @@ public class MainActivity extends AppCompatActivity {
         outputStream.close();
     }
 
+    private void writeToExternalJson() throws IOException {
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/" + NOTES_FILE_NAME);
+        if (!myDir.exists()) {
+            myDir.mkdirs();
+        }
+        FileOutputStream outputStream = new FileOutputStream(myDir);
+        outputStream.write(new Gson().toJson(notes).getBytes());
+        outputStream.close();
+    }
+
     public void readFromJson() {
         try {
             FileInputStream inputStream = openFileInput(NOTES_FILE_NAME);
+            InputStreamReader inputReader = new InputStreamReader(inputStream);
+            BufferedReader buffReader = new BufferedReader(inputReader);
+            StringBuilder strBuffer = new StringBuilder();
+            String lines;
+            while ((lines = buffReader.readLine()) != null) {
+                strBuffer.append(lines).append("\n");
+            }
+            Type dataType = new TypeToken<Map<String, String>>() {
+            }.getType();
+            notes = new Gson().fromJson(strBuffer.toString(), dataType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readFromExternalJson() {
+        try {
+           String path = getExternalFilesDir(Environment.DIRECTORY_DCIM + "/" + NOTES_FILE_NAME).getAbsolutePath();
+            FileInputStream inputStream = openFileInput(path);
             InputStreamReader inputReader = new InputStreamReader(inputStream);
             BufferedReader buffReader = new BufferedReader(inputReader);
             StringBuilder strBuffer = new StringBuilder();

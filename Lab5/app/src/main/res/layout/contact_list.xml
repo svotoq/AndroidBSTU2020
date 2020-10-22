@@ -9,12 +9,11 @@
         android:id="@+id/phoneItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/phone_number"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/selectItemCheckBox"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,12 +41,5 @@
         app:layout_constraintStart_toStartOf="@+id/emailItem"
         app:layout_constraintTop_toBottomOf="@+id/emailItem" />
 
-    <CheckBox
-        android:id="@+id/selectItemCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

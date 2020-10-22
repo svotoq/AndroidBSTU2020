@@ -1,11 +1,13 @@
 package psy.fit.bstu.lab5.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -44,10 +46,16 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         viewHolder.phoneItem.setText(contact.getPhoneNumber());
         viewHolder.emailItem.setText(contact.getEmail());
         viewHolder.locationItem.setText(contact.getLocation());
-        viewHolder.selectItem.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-                Log.d("main", String.valueOf(((CheckBox) view).isChecked()));
-                checkBoxState[position] = ((CheckBox) view).isChecked();
+                if (checkBoxState[position]) {
+                    view.setBackgroundColor(Color.parseColor("#FAFAFA"));
+
+                } else {
+                    view.setBackgroundColor(Color.LTGRAY);
+                }
+                checkBoxState[position] = !checkBoxState[position];
             }
         });
 
@@ -74,13 +82,11 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
 
     private class ViewHolder {
         final TextView phoneItem, emailItem, locationItem;
-        final CheckBox selectItem;
 
         ViewHolder(View view) {
             phoneItem = view.findViewById(R.id.phoneItem);
             emailItem = view.findViewById(R.id.emailItem);
             locationItem = view.findViewById(R.id.locationItem);
-            selectItem = view.findViewById(R.id.selectItemCheckBox);
         }
     }
 }

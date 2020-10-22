@@ -3,24 +3,19 @@ package psy.fit.bstu.lab5;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import psy.fit.bstu.lab5.Listeners.OnContactClickListener;
 import psy.fit.bstu.lab5.adapter.ContactAdapter;
 import psy.fit.bstu.lab5.db.DatabaseContactController;
 
@@ -38,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         contactController = new DatabaseContactController(this);
         contactsList = findViewById(R.id.contactsListView);
-        contactsList.setOnItemClickListener(new OnContactClickListener());
         registerForContextMenu(contactsList);
         loadContacts();
     }
