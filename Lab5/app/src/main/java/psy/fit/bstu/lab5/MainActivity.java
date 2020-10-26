@@ -52,19 +52,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.deleteItem: {
-                ArrayList<Contact> selectedContacts = adapter.getSelectedContacts();
-                for (Contact contact : selectedContacts) {
-                    contactController.delete(contact.getID());
-                }
-                Toast.makeText(this, getString(R.string.remove_selected, selectedContacts.size()), Toast.LENGTH_SHORT).show();
-                loadContacts();
-                return true;
-            }
+        if (item.getItemId() != R.id.deleteItem) {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+        ArrayList<Contact> selectedContacts = adapter.getSelectedContacts();
+        if (selectedContacts.size() < 1) {
+            Toast.makeText(this, R.string.select_to_remove, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        for (Contact contact : selectedContacts) {
+            contactController.delete(contact.getID());
+        }
+        Toast.makeText(this, getString(R.string.remove_selected, selectedContacts.size()), Toast.LENGTH_SHORT).show();
+        loadContacts();
+        return true;
     }
+    
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

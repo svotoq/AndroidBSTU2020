@@ -58,6 +58,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                 checkBoxState[position] = !checkBoxState[position];
             }
         });
+        convertView.setLongClickable(true);
 
         return convertView;
     }
