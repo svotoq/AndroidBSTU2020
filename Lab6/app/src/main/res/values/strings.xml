@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">FourthLab</string>
+
+    <string name="contacts_label">Contacts</string>
+    <string name="contact_label">Contact</string>
+    <string name="new_contact">New contact</string>
+    <string name="save">Save</string>
+    <string name="back">Back</string>
+
+    <!--    Contact fields-->
+    <string name="email">Email</string>
+    <string name="id">ID</string>
+    <string name="location">Location</string>
+    <string name="phone_number">Phone</string>
+    <string name="social_network_link">Social Network</string>
+    <string name="contact_form">Contact form</string>
+
+    <!-- contact manipulation-->
+    <string name="contact_created">Contact created</string>
+    <string name="contact_create_error">Unable to create a contact</string>
+    <string name="contact_deleted">Contact %1$s was deleted</string>
+    <string name="contact_updated">Contact was successfully updated</string>
+    <string name="contact_update_error">Unable to update a contact</string>
+    <string name="remove_selected">Contacts removed %1$d</string>
+    <string name="select_to_remove">Select contacts to remove</string>
+    <!--    items menu-->
+    <string name="delete_item">Delete</string>
+    <string name="edit_item">Edit</string>
+    <string name="open_contact">Open</string>
+</resources>
