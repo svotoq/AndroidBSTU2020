@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText noteField;
     private String selectedDate;
     private boolean externalMode = false;
+    CalendarView calendarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Initialization
         noteField = findViewById(R.id.noteField);
-        CalendarView calendarView = findViewById(R.id.calendarView);
+        calendarView = findViewById(R.id.calendarView);
         //Listeners
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -54,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 noteField.setText(notes.get(selectedDate));
             }
         });
-
         if (!externalMode) {
             readFromJson();
         } else {
@@ -90,19 +91,21 @@ public class MainActivity extends AppCompatActivity {
         noteField.setText("");
         if (externalMode) {
             writeToExternalJson();
+            readFromExternalJson();
         } else {
             writeToJson();
+            readFromJson();
         }
         Toast.makeText(getApplicationContext(), R.string.note_deleted, Toast.LENGTH_SHORT).show();
     }
 
     public void onExternalMode(View view) {
-        if (externalMode) {
-            readFromJson();
-        } else {
-            readFromExternalJson();
-        }
         externalMode = !externalMode;
+        if (externalMode) {
+            readFromExternalJson();
+        } else {
+            readFromJson();
+        }
     }
 
     public void writeToJson() throws IOException {
@@ -110,17 +113,25 @@ public class MainActivity extends AppCompatActivity {
         outputStream = openFileOutput(NOTES_FILE_NAME, MODE_PRIVATE);
         outputStream.write(new Gson().toJson(notes).getBytes());
         outputStream.close();
+
     }
 
     private void writeToExternalJson() throws IOException {
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/" + NOTES_FILE_NAME);
-        if (!myDir.exists()) {
-            myDir.mkdirs();
+        if (isExternalStorageAvailable()) {
+            File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+            File myFile = new File(folder, NOTES_FILE_NAME);
+            FileOutputStream outputStream = null;
+            try {
+                outputStream = new FileOutputStream(myFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            outputStream.write(new Gson().toJson(notes).getBytes());
+            outputStream.close();
+        } else {
+            Toast.makeText(this, "storage unvaliable WRITE", Toast.LENGTH_SHORT).show();
+
         }
-        FileOutputStream outputStream = new FileOutputStream(myDir);
-        outputStream.write(new Gson().toJson(notes).getBytes());
-        outputStream.close();
     }
 
     public void readFromJson() {
@@ -136,15 +147,36 @@ public class MainActivity extends AppCompatActivity {
             Type dataType = new TypeToken<Map<String, String>>() {
             }.getType();
             notes = new Gson().fromJson(strBuffer.toString(), dataType);
+            updateSelectedDate();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void readFromExternalJson() {
+        if (isExternalStorageAvailable()) {
+            File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+            File myFile = new File(folder, NOTES_FILE_NAME);
+            if (!myFile.exists()) {
+                notes.clear();
+            } else {
+                getData(myFile);
+
+            }
+
+        } else {
+            Toast.makeText(this, "storage unvaliable", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals((state));
+    }
+
+    private void getData(File myFile) {
         try {
-           String path = getExternalFilesDir(Environment.DIRECTORY_DCIM + "/" + NOTES_FILE_NAME).getAbsolutePath();
-            FileInputStream inputStream = openFileInput(path);
+            FileInputStream inputStream = new FileInputStream(myFile);
             InputStreamReader inputReader = new InputStreamReader(inputStream);
             BufferedReader buffReader = new BufferedReader(inputReader);
             StringBuilder strBuffer = new StringBuilder();
@@ -155,8 +187,17 @@ public class MainActivity extends AppCompatActivity {
             Type dataType = new TypeToken<Map<String, String>>() {
             }.getType();
             notes = new Gson().fromJson(strBuffer.toString(), dataType);
+            updateSelectedDate();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void updateSelectedDate() {
+        if (notes.containsKey(selectedDate)) {
+            noteField.setText(notes.get(selectedDate));
+        } else {
+            noteField.setText("");
         }
     }
 }
