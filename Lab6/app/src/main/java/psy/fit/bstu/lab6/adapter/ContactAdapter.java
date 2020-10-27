@@ -24,7 +24,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         this.contactsList = contacts;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
-        checkBoxState = new boolean[contacts.size()];
+        checkBoxState = new boolean[9999];
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -39,9 +39,9 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         }
         final Contact contact = contactsList.get(position);
 
-        viewHolder.phoneItem.setText(contact.getPhoneNumber());
-        viewHolder.emailItem.setText(contact.getEmail());
-        viewHolder.locationItem.setText(contact.getLocation());
+        viewHolder.phoneItem.setText(contact.phone);
+        viewHolder.emailItem.setText(contact.email);
+        viewHolder.locationItem.setText(contact.location);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,18 +63,18 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         return contactsList.get(position);
     }
 
-    private String formatValue(int count, String unit) {
-        return count + " " + unit;
-    }
-
-    public ArrayList<Contact> getSelectedContacts() {
-        ArrayList<Contact> selectedContacts = new ArrayList<Contact>();
+    public ArrayList<Integer> getSelectedContactsPos() {
+        ArrayList<Integer> selectedContactspPos = new ArrayList<>();
         for (int i = 0; i < checkBoxState.length; i++) {
             if (checkBoxState[i]) {
-                selectedContacts.add(contactsList.get(i));
+                selectedContactspPos.add(i);
             }
         }
-        return selectedContacts;
+        return selectedContactspPos;
+    }
+
+    public void clearSelectedContactsPos() {
+        checkBoxState = new boolean[9999];
     }
 
     private class ViewHolder {

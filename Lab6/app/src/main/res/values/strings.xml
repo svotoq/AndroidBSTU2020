@@ -27,4 +27,16 @@
     <string name="delete_item">Delete</string>
     <string name="edit_item">Edit</string>
     <string name="open_contact">Open</string>
+
+    <!--    Auth-->
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_email">Not a valid Email</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="log_out">"Logout"</string>
 </resources>

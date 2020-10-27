@@ -9,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name="psy.fit.bstu.lab6.ViewContactActivity" />
-        <activity android:name="psy.fit.bstu.lab6.FormActivity" />
-        <activity android:name="psy.fit.bstu.lab6.MainActivity">
+        <activity android:name=".SigninActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ViewContactActivity" />
+        <activity android:name=".FormActivity" />
+        <activity android:name=".AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

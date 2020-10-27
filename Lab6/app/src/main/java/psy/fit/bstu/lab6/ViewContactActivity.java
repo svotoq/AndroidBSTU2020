@@ -8,18 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import psy.fit.bstu.lab6.db.DatabaseContactController;
-
 public class ViewContactActivity extends AppCompatActivity {
-
-    private DatabaseContactController contactController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_contact);
 
-        contactController = new DatabaseContactController(this);
         loadContact();
     }
 
@@ -30,12 +25,11 @@ public class ViewContactActivity extends AppCompatActivity {
         TextView socialNetworkTextView = findViewById(R.id.socialNetworkTextView);
 
         Intent intent = getIntent();
-        Contact contact = contactController.readSingleRecord(intent.getIntExtra("id", 0));
 
-        emailTextView.setText(contact.getEmail());
-        phoneTextView.setText(contact.getPhoneNumber());
-        locationTextView.setText(contact.getLocation());
-        socialNetworkTextView.setText(contact.getSocialNetwork());
+        emailTextView.setText(intent.getStringExtra("email"));
+        phoneTextView.setText(intent.getStringExtra("phone"));
+        locationTextView.setText(intent.getStringExtra("location"));
+        socialNetworkTextView.setText(intent.getStringExtra("social"));
     }
 
     public void onShowLocation(View view) {
