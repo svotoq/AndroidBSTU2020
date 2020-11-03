@@ -27,4 +27,10 @@
     <string name="delete_item">Delete</string>
     <string name="edit_item">Edit</string>
     <string name="open_contact">Open</string>
+
+    <!-- dialog -->
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="delete_contact_msg">Do you want to delete a contact?</string>
+    <string name="confirmation_msg">Confirmation!</string>
 </resources>

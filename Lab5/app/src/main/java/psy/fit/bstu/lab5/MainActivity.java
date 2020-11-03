@@ -1,8 +1,10 @@
 package psy.fit.bstu.lab5;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         loadContacts();
         return true;
     }
-    
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -82,10 +84,7 @@ public class MainActivity extends AppCompatActivity {
         Contact contact = contacts.get(info.position);
         switch (item.getItemId()) {
             case R.id.contextMenuDeleteItem: {
-                if (contactController.delete(contact.getID())) {
-                    Toast.makeText(this, getString(R.string.contact_deleted, contact.getPhoneNumber()), Toast.LENGTH_SHORT).show();
-                    loadContacts();
-                }
+                showDialog(contact);
                 return true;
             }
             case R.id.contextMenuEditItem: {
@@ -103,6 +102,31 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void showDialog(final Contact contact) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.confirmation_msg)
+                .setMessage(R.string.delete_contact_msg)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        onDeleteItem(contact);
+                    }
+                });
+        builder.create().show();
+    }
+
+    public void onDeleteItem(Contact contact) {
+        if (contactController.delete(contact.getID())) {
+            Toast.makeText(this, getString(R.string.contact_deleted, contact.getPhoneNumber()), Toast.LENGTH_SHORT).show();
+            loadContacts();
+        }
     }
 
     private void loadContacts() {
