@@ -4,8 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import psy.fit.bstu.lab6.adapter.ContactAdapter;
+import psy.fit.bstu.lab6.db.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Contact> contacts;
     private ArrayList<String> listKeys;
     private ListView contactsList;
-    private DatabaseReference contactsRef;
 
     private FirebaseAuth mAuth;
+    private DatabaseHelper databaseHelper;
+    private SQLiteDatabase db;
+    private Cursor contactCursor;
     private static final int CREATE_CONTACT = 1;
     private static final int EDIT_CONTACT = 2;
 
@@ -49,57 +58,22 @@ public class MainActivity extends AppCompatActivity {
         contacts = new ArrayList<Contact>();
         listKeys = new ArrayList<>();
 
-        contactsRef = FirebaseDatabase.getInstance().getReference(mAuth.getCurrentUser()
-                .getUid()).child("contacts");
-
+        databaseHelper = new DatabaseHelper(getApplicationContext());
         adapter = new ContactAdapter(this, R.layout.contact_list, contacts);
         contactsList.setAdapter(adapter);
 
 
-        addChildEventListener();
         registerForContextMenu(contactsList);
 
     }
 
-    private void addChildEventListener() {
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Contact contact = new Contact(snapshot.child("email").getValue().toString(),
-                        snapshot.child("phone").getValue().toString(),
-                        snapshot.child("location").getValue().toString(),
-                        snapshot.child("social").getValue().toString());
-                adapter.add(contact);
-                listKeys.add(snapshot.getKey());
-            }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        db = databaseHelper.getReadableDatabase();
+        contactCursor = db.rawQuery("select * from " + DatabaseHelper.TableName, null);
+        String[] headers = new String[] {DatabaseHelper.KEY_PHONE, DatabaseHelper.KEY_EMAIL, DatabaseHelper.KEY_LOCATION};
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                String key = snapshot.getKey();
-                int index = listKeys.indexOf(key);
-
-                if (index != -1) {
-                    contacts.remove(index);
-                    listKeys.remove(index);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        contactsRef.addChildEventListener(childEventListener);
     }
 
     public void addContact(String email, String phone, String location, String social) {

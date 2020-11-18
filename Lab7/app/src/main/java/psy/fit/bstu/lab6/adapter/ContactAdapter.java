@@ -1,11 +1,13 @@
 package psy.fit.bstu.lab6.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,14 +15,14 @@ import java.util.ArrayList;
 import psy.fit.bstu.lab6.Contact;
 import psy.fit.bstu.lab6.R;
 
-public class ContactAdapter extends ArrayAdapter<Contact> {
+public class ContactAdapter extends SimpleCursorAdapter {
     private LayoutInflater inflater;
     private int layout;
-    private ArrayList<Contact> contactsList;
+    private Cursor contactsList;
     private boolean[] checkBoxState;
 
-    public ContactAdapter(Context context, int resource, ArrayList<Contact> contacts) {
-        super(context, resource, contacts);
+    public ContactAdapter(Context context, int resource, Cursor contacts, String[] from, int[] to) {
+        super(context, resource, contacts, from, to);
         this.contactsList = contacts;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
@@ -37,7 +39,6 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final Contact contact = contactsList.get(position);
 
         viewHolder.phoneItem.setText(contact.phone);
         viewHolder.emailItem.setText(contact.email);
