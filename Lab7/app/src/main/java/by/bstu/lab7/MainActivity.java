@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,19 +43,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void init(){
-        userList = (ListView)findViewById(R.id.list);
+
+    private void init() {
+        userList = (ListView) findViewById(R.id.list);
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
         db = databaseHelper.getReadableDatabase();
 
-        userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
+        userCursor = db.rawQuery("select * from " + DatabaseHelper.TABLE, null);
 
-        String[] headers = new String[] {DatabaseHelper.COLUMN_MAIL};
+        String[] headers = new String[]{DatabaseHelper.COLUMN_MAIL};
 
         userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
                 userCursor, headers, new int[]{android.R.id.text1}, 0);
@@ -66,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 if (constraint == null || constraint.length() == 0) {
 
                     return db.rawQuery("select * from " + DatabaseHelper.TABLE, null);
-                }
-                else {
+                } else {
                     return db.rawQuery("select * from " + DatabaseHelper.TABLE + " where " +
                             DatabaseHelper.COLUMN_MAIL + " like ?", new String[]{"%" + constraint.toString() + "%"});
                 }
@@ -76,16 +78,19 @@ public class MainActivity extends AppCompatActivity {
 
         userList.setAdapter(userAdapter);
     }
+
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         db.close();
         userCursor.close();
     }
+
     public void add(View view) {
         Intent intent = new Intent(this, UserActivity.class);
         startActivity(intent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -115,12 +120,13 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch(id){
-            case R.id.favorite_users :
-                getFavorite();
+        switch (id) {
+            case R.id.favorite_users:
+                new GetFavorite().execute();
                 return true;
             case R.id.all_users:
                 onResume();
@@ -128,19 +134,34 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void getFavorite(){
-        userList.setAdapter(null);
-        db = databaseHelper.getReadableDatabase();
 
-        userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE+ " where " +
-                DatabaseHelper.COLUMN_FAVORITE + "=?", new String[]{String.valueOf(1)});
 
-        String[] headers = new String[] {DatabaseHelper.COLUMN_MAIL, DatabaseHelper.COLUMN_PHONE};
+    public class GetFavorite extends AsyncTask<Void, Void, Void> {
 
-        userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
-                userCursor, headers, new int[]{android.R.id.text1}, 0);
+        @Override
+        protected void onPreExecute() {
+            userList.setAdapter(null);
+            db = databaseHelper.getReadableDatabase();
+        }
 
-        userList.setAdapter(userAdapter);
+        @Override
+        protected Void doInBackground(Void... voids) {
+            userCursor = db.rawQuery("select * from " + DatabaseHelper.TABLE + " where " +
+                    DatabaseHelper.COLUMN_FAVORITE + "=?", new String[]{String.valueOf(1)});
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            String[] headers = new String[]{DatabaseHelper.COLUMN_MAIL, DatabaseHelper.COLUMN_PHONE};
+
+            userAdapter = new SimpleCursorAdapter(getApplicationContext(), android.R.layout.simple_list_item_1,
+                    userCursor, headers, new int[]{android.R.id.text1}, 0);
+
+            userList.setAdapter(userAdapter);
+        }
+
     }
 
 }
