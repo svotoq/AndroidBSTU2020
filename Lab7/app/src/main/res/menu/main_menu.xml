@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuItem_search"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/favorite_users"
+        android:orderInCategory="1"
+        android:title="Избранные" />
+    <item
+        android:id="@+id/all_users"
+        android:orderInCategory="2"
+        android:title="Вывод всех" />
+</menu>

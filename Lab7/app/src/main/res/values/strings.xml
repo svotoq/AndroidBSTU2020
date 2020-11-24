@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Lab7</string>
-    <string name="contacts">Contacts</string>
+    <!--    Contact fields-->
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="id">ID</string>
+    <string name="location">Location</string>
+    <string name="phone_number">Phone</string>
+    <string name="social_network_link">Social Network</string>
+    <string name="contact_form">Contact form</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="favorite">Избранный контакт:</string>
+
 </resources>
