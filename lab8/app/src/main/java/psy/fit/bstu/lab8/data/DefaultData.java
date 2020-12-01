@@ -5,42 +5,34 @@ import java.util.ArrayList;
 import psy.fit.bstu.lab8.models.Contact;
 
 public class DefaultData {
-    public static ArrayList<Contact> getMockedContacts() {
-        ArrayList<Contact> mockedContacts = new ArrayList<>();
+    public static ArrayList<Contact> getDefaultContacts() {
+        ArrayList<Contact> contacts = new ArrayList<>();
 
         Contact firstContact = new Contact();
         firstContact.setId(1);
-        firstContact.setName("Oleg");
-        firstContact.setPhone("+12345683");
+        firstContact.setName("Stas");
+        firstContact.setPhone("+375442331241");
         firstContact.setLocation("Minsk");
-        firstContact.setVkLink("o.ryazin");
+        firstContact.setVkLink("isvoq");
 
         Contact secondContact = new Contact();
         secondContact.setId(2);
-        secondContact.setName("Igor");
-        secondContact.setPhone("+919853256");
+        secondContact.setName("Lexa");
+        secondContact.setPhone("+375291234123");
         secondContact.setLocation("Minsk");
-        secondContact.setVkLink("ihar");
+        secondContact.setVkLink("lexik");
 
         Contact thirdContact = new Contact();
         thirdContact.setId(3);
-        thirdContact.setName("Kolya");
-        thirdContact.setPhone("+7893513782");
-        thirdContact.setLocation("Slutsk");
-        thirdContact.setVkLink("kolya");
+        thirdContact.setName("Vova");
+        thirdContact.setPhone("+3752942233418");
+        thirdContact.setLocation("Gomel");
+        thirdContact.setVkLink("vov4ik");
 
-        Contact fourthContact = new Contact();
-        fourthContact.setId(4);
-        fourthContact.setName("Dima");
-        fourthContact.setPhone("+349876386");
-        fourthContact.setLocation("Minsk");
-        fourthContact.setVkLink("dima");
+        contacts.add(firstContact);
+        contacts.add(secondContact);
+        contacts.add(thirdContact);
 
-        mockedContacts.add(firstContact);
-        mockedContacts.add(secondContact);
-        mockedContacts.add(thirdContact);
-        mockedContacts.add(fourthContact);
-
-        return mockedContacts;
+        return contacts;
     }
 }
