@@ -12,14 +12,9 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="psy.fit.bstu.lab9.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_list"
+        android:name="psy.fit.bstu.lab9.ui.card.CardFragment"
+        android:label="@string/menu_list"
+        tools:layout="@layout/fragment_card" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="psy.fit.bstu.lab9.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 </navigation>
