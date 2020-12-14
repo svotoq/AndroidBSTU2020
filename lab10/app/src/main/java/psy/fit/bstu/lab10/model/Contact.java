@@ -1,13 +1,21 @@
 package psy.fit.bstu.lab10.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Contact {
+@Entity
+public class Contact implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private String phone;
     private String name;
-    public Contact(String phone, String name) {
-        this.phone = phone;
+
+    public Contact(String name, String phone) {
         this.name = name;
+        this.phone = phone;
     }
 
     public String getName() {
@@ -18,6 +26,11 @@ public class Contact {
         return phone;
     }
 
+    public long getId() {
+        return id;
+    }
+
+
     public void setName(String name) {
         this.name = name;
     }
@@ -26,12 +39,9 @@ public class Contact {
         this.phone = phone;
     }
 
-
-    public static ArrayList<Contact> initializeData() {
-        ArrayList<Contact> contacts = new ArrayList<>();
-        contacts.add(new Contact("+375298639126", "Stanislav"));
-        contacts.add(new Contact("+375324324324", "Alex"));
-        contacts.add(new Contact("+375298633242", "Yahor"));
-        return contacts;
+    public void setId(long id) {
+        this.id = id;
     }
+
+
 }
