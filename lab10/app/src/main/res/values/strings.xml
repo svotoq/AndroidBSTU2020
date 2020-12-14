@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">lab10</string>
+
+
+    <!--    contacts-->
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="create_contact">Create contact</string>
+</resources>
