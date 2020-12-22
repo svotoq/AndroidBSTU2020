@@ -2,8 +2,8 @@ package psy.fit.bstu.lab13
 
 import IBaseModel
 import Post
-import Superhero
-import User
+import Comments
+import Todo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dataRecyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var initText: TextView
-
+    private val link = "https://jsonplaceholder.typicode.com"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     this.renderPosts()
                 }
                 R.id.catsApi -> {
-                    this.renderUsers()
+                    this.renderTodos()
                 }
             }
         }
@@ -61,14 +61,13 @@ class MainActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
 
         GlobalScope.launch(Dispatchers.IO) {
-            val response = CommonClient(heroesLink).genericRetrofitService.getSuperheroes().awaitResponse()
+            val response = CommonClient(link).genericRetrofitService.getComments().awaitResponse()
 
             if (response.isSuccessful) {
                 val data: List<IBaseModel> = response.body()!!
 
                 withContext(Dispatchers.Main) {
-                    render(data, heroesLink)
-                }
+                    render(data as List<Comments>)                }
             }
         }
     }
@@ -77,46 +76,39 @@ class MainActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
 
         GlobalScope.launch(Dispatchers.IO) {
-            val response = CommonClient(postsLink).genericRetrofitService.getPosts().awaitResponse()
+            val response = CommonClient(link).genericRetrofitService.getPosts().awaitResponse()
 
             if (response.isSuccessful) {
                 val data: List<IBaseModel> = response.body()!!
 
                 withContext(Dispatchers.Main) {
-                    render(data, postsLink)
+                    render(data as List<Post>)
                 }
             }
         }
     }
 
-    private fun renderUsers() {
+    private fun renderTodos() {
         progressBar.visibility = View.VISIBLE
 
         GlobalScope.launch(Dispatchers.IO) {
-            val response = CommonClient(usersLink).genericRetrofitService.getUsers().awaitResponse()
+            val response = CommonClient(link).genericRetrofitService.getTodos().awaitResponse()
 
             if (response.isSuccessful) {
                 val data: List<IBaseModel> = response.body()!!
 
                 withContext(Dispatchers.Main) {
-                    render(data, usersLink)
+                    render(data as List<Todo>)
                 }
             }
         }
     }
 
-    private fun render(data: List<IBaseModel>, link: String) {
+    private fun render(data: List<IBaseModel>) {
         progressBar.visibility = View.GONE
-
-        val adapter = when (link) {
-            heroesLink -> ViewAdapter(data as List<Superhero>)
-            postsLink -> ViewAdapter(data as List<Post>)
-            else -> ViewAdapter(data as List<User>)
-        }
-
         val layoutManager = LinearLayoutManager(this@MainActivity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         dataRecyclerView.layoutManager = layoutManager
-        dataRecyclerView.adapter = adapter
+        dataRecyclerView.adapter = ViewAdapter(data)
     }
 }

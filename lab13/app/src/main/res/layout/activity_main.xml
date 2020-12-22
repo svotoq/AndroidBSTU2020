@@ -18,7 +18,7 @@
                 android:id="@+id/marvelApi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Marvel"
+                android:text="Comments"
                 />
             <RadioButton
                 android:id="@+id/postsApi"
@@ -30,7 +30,7 @@
                 android:id="@+id/catsApi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Users"
+                android:text="Todos"
                 />
         </RadioGroup>
         <ProgressBar

@@ -6,6 +6,6 @@ data class Post (
     val body: String
 ) : IBaseModel {
     override fun toString(): String {
-        return this.title
+        return "Title: ${this.title}, Body: ${this.body}"
     }
 }
